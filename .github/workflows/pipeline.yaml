@@ -7,15 +7,15 @@ jobs:
     uses: delarooster/Dlr.Yaml.Templates/.github/workflows/build-tf.yaml@main
     with:
       workingDirectory: "env/"
-      targetEnvironment: "Dv"
+      targetEnvironment: "Dev"
       resourceGroup: "rg-atd-test"
     secrets: inherit
 
-  post-deploy:
+  deploy:
     uses: delarooster/Dlr.Yaml.Templates/.github/workflows/deploy-tf.yaml@main
     needs: build
     with:
       workingDirectory: "env/"
-      targetEnvironment: "Dv"
+      targetEnvironment: "Dev"
       resourceGroup: "rg-atd-test"
     secrets: inherit
