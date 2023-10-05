@@ -1,0 +1,21 @@
+name: Deploy Bicep
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    uses: delarooster/Dlr.Yaml.Templates/.github/workflows/build-tf.yaml@main
+    with:
+      workingDirectory: "env/"
+      targetEnvironment: "Dv"
+      resourceGroup: "rg-atd-test"
+    secrets: inherit
+
+  post-deploy:
+    uses: delarooster/Dlr.Yaml.Templates/.github/workflows/deploy-tf.yaml@main
+    needs: build
+    with:
+      workingDirectory: "env/"
+      targetEnvironment: "Dv"
+      resourceGroup: "rg-atd-test"
+    secrets: inherit
