@@ -1,4 +1,4 @@
-name: Deploy Bicep
+name: Deploy Terraform
 
 on: [push, workflow_dispatch]
 
@@ -7,7 +7,7 @@ jobs:
     uses: delarooster/Dlr.Yaml.Templates/.github/workflows/build-tf.yaml@main
     with:
       workingDirectory: "env/"
-      targetEnvironment: "Dev"
+      targetEnvironment: "dev"
       resourceGroup: "rg-atd-test"
     secrets: inherit
 
@@ -16,6 +16,6 @@ jobs:
     needs: build
     with:
       workingDirectory: "env/"
-      targetEnvironment: "Dev"
+      targetEnvironment: "dev"
       resourceGroup: "rg-atd-test"
     secrets: inherit
