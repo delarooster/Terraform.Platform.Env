@@ -23,7 +23,7 @@ jobs:
       ARM_SKIP_PROVIDER_REGISTRATION: true
     steps:
       - name: Azure Login
-        uses: azure/login@v1`
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_LOGIN_CREDENTIALS }}
 
