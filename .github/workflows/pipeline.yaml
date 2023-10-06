@@ -54,13 +54,15 @@ jobs:
       - name: Terraform Format
         run: terraform fmt -recursive -diff -check
 
+      - run: ls -la
+
       # Generates an execution plan for Terraform
       # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
       - name: Terraform Plan
         id: tf-plan
         run: |
           export exitcode=0
-          terraform plan -var-file="env/variables/dev.tfvars" -detailed-exitcode -no-color -out dv.tfplan || export exitcode=$?
+          terraform plan -var-file="./env/variables/dev.tfvars" -detailed-exitcode -no-color -out dv.tfplan || export exitcode=$?
 
           echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
 
