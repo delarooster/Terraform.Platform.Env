@@ -1,9 +1,9 @@
 # Copyright (c) 2023 Mesh. All rights reserved.
 
 #General Project Vars
-name            = "mesh"
-tags            = {}
-location        = "East US"
-location_suffix = "eus"
-env             = "prod"
+name             = "mesh"
+tags             = {}
+location         = "East US"
+location_suffix  = "eus"
+env              = "prod"
 functionappcount = 1
