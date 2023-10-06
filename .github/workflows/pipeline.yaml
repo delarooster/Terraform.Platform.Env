@@ -6,9 +6,6 @@ jobs:
   build:
     name: "Init and Plan Terraform"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: pwsh
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -31,9 +28,7 @@ jobs:
           STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT }}
           CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
         run: |
-          terraform init -backend-config="storage_account_name=${env:STORAGE_ACCOUNT}" \
-            -backend-config="container_name=${env:CONTAINER_NAME}" \
-            -backend-config="resource_group_name=${env:RESOURCE_GROUP}"
+          terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP"
 
   #   uses: delarooster/Dlr.Yaml.Templates/.github/workflows/build-tf.yaml@main
   #   with:
