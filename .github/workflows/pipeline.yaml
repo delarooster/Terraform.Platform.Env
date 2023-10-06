@@ -2,84 +2,14 @@ name: Deploy Terraform
 
 on: [push, workflow_dispatch]
 
-#Special permissions required for OIDC authentication
-permissions:
-  id-token: write
-  contents: read
-  pull-requests: write
-
-#These environment variables are used by the terraform azure provider to setup OIDD authenticate.
-env:
-  ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
-  ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-  ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
-  ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-
 jobs:
   build:
-    name: "Init and Plan Terraform"
-    runs-on: ubuntu-latest
-    env:
-      #this is needed since we are running terraform with read-only permissions
-      ARM_SKIP_PROVIDER_REGISTRATION: true
-    steps:
-      # - name: Azure Login
-      #   uses: azure/login@v1
-      #   with:
-      #     creds: ${{ secrets.AZURE_LOGIN_CREDENTIALS }}
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.5.7
-          terraform_wrapper: false
-
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-      - name: Terraform Init
-        id: init
-        env:
-          ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
-          ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-          ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
-          ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-          RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
-          STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT }}
-        run: terraform init -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="key=dvgithubstatefiles"
-        working-directory: ./env
-
-      - name: Terraform Format
-        run: terraform fmt -recursive -diff -check
-
-      - run: ls -la
-
-      # Generates an execution plan for Terraform
-      # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
-      - name: Terraform Plan
-        id: tf-plan
-        run: |
-          export exitcode=0
-          terraform plan -var-file="variables/dev.tfvars" -detailed-exitcode -no-color -out dv.tfplan || export exitcode=$?
-
-          echo "exitcode=$exitcode" >> $GITHUB_OUTPUT
-
-          if [ $exitcode -eq 1 ]; then
-            echo Terraform Plan Failed!
-            exit 1
-          else 
-            exit 0
-          fi
-        working-directory: ./env
-
-  #   uses: delarooster/Dlr.Yaml.Templates/.github/workflows/build-tf.yaml@main
-  #   with:
-  #     workingDirectory: "env/"
-  #     targetEnvironment: "dev"
-  #     resourceGroup: "rg-atd-test"
-  #   secrets: inherit
+    uses: delarooster/Dlr.Yaml.Templates/.github/workflows/build-tf.yaml@main
+    with:
+      workingDirectory: ./env
+      targetEnvironment: "dev"
+      resourceGroup: "rg-mesh-dev"
+    secrets: inherit
 
   # deploy:
   #   uses: delarooster/Dlr.Yaml.Templates/.github/workflows/deploy-tf.yaml@main
