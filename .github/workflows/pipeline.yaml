@@ -15,7 +15,6 @@ jobs:
     uses: delarooster/Dlr.Yaml.Templates/.github/workflows/deploy-tf.yaml@main
     needs: build
     with:
-      workingDirectory: ./env
       targetEnvironment: "dev"
       resourceGroup: "rg-mesh-dev"
     secrets: inherit
