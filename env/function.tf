@@ -26,7 +26,7 @@ resource "azurerm_service_plan" "windows-adx" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   os_type  = "Windows"
-  sku_name = "F1"
+  sku_name = "S1"
 
   tags = {
     provisioned_by = "terraform"
