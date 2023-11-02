@@ -13,14 +13,14 @@ data "azurerm_servicebus_namespace" "service_bus" {
 
 
 resource "azurerm_servicebus_queue" "queue" {
-  name         = "test-prod-queue"
+  name         = "test-pd-queue"
   namespace_id = data.azurerm_servicebus_namespace.service_bus.id
 
   enable_partitioning = true
 }
 
 resource "azurerm_servicebus_topic" "topic" {
-  name         = "test-prod-topic"
+  name         = "test-pd-topic"
   namespace_id = data.azurerm_servicebus_namespace.service_bus.id
 
   enable_partitioning = true
