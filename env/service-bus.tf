@@ -2,7 +2,7 @@ resource "azurerm_servicebus_namespace" "service_bus" {
   name                = "${local.prefix_short}sb"
   location            = var.location
   resource_group_name = data.azurerm_resource_group.rg.name
-  sku                 = "Basic"
+  sku                 = "Standard"
   zone_redundant      = false
 }
 
