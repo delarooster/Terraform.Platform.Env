@@ -1,9 +1,9 @@
 resource "azurerm_servicebus_namespace" "service_bus" {
-  name = "${local.prefix_short}sb"
-  location = var.location
+  name                = "${local.prefix_short}sb"
+  location            = var.location
   resource_group_name = data.azurerm_resource_group.rg.name
-  sku = "Basic"
-  zone_redundant = false
+  sku                 = "Basic"
+  zone_redundant      = false
 }
 
 resource "azurerm_servicebus_queue" "queue" {
