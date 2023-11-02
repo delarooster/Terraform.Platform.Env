@@ -5,5 +5,5 @@ name             = "mesh"
 tags             = {}
 location         = "East US"
 location_suffix  = "eus"
-env              = "prod"
+env              = "pd"
 functionappcount = 1
