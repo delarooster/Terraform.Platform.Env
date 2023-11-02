@@ -12,3 +12,10 @@ resource "azurerm_servicebus_queue" "queue" {
 
   enable_partitioning = true
 }
+
+resource "azurerm_servicebus_topic" "topic" {
+  name         = "test-topic"
+  namespace_id = azurerm_servicebus_namespace.service_bus.id
+
+  enable_partitioning = true
+}

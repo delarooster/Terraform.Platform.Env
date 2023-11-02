@@ -58,7 +58,7 @@ resource "azurerm_function_app" "adx-timeseries" {
     FUNCTIONS_WORKER_RUNTIME                   = "dotnet"
     WEBSITE_ENABLE_SYNC_UPDATE_SITE            = true
     WEBSITE_RUN_FROM_PACKAGE                   = "1"
-    #TEST_SERVICEBUS_ID_VALUE                   = data.azurerm_servicebus_namespace.service_bus.id
+    TEST_SERVICEBUS_ID_VALUE                   = data.azurerm_servicebus_namespace.service_bus.id
   }
 
   tags = {
@@ -66,7 +66,7 @@ resource "azurerm_function_app" "adx-timeseries" {
   }
 }
 
-# data "azurerm_servicebus_namespace" "service_bus" {
-#   name                = "${local.prefix_short}sb"
-#   resource_group_name = data.azurerm_resource_group.rg.name
-# }
+data "azurerm_servicebus_namespace" "service_bus" {
+  name                = "${local.prefix_short}sb"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
